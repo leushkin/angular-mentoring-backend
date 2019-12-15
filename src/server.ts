@@ -18,7 +18,7 @@ const rootDir = __dirname
     },
     rootDir,
     acceptMimes: ["application/json"],
-    port: 4000
+    port: process.env.PORT || 4000
 })
 export class Server extends ServerLoader {
     /**
