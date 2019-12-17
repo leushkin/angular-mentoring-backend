@@ -3,14 +3,24 @@ import { LoginRequestType, LoginResponseType } from "src/types";
 
 @Controller("/auth")
 export class Course {
-    @Post()
-    create(
+    @Post('/login')
+    login(
         @BodyParams() payload: LoginRequestType
     ): LoginResponseType {
         return {
             ...payload,
             isLoggedIn: true,
             token: Math.random().toString()
+        }
+    }
+
+    @Post('/logout')
+    logout(
+        @BodyParams() payload: LoginRequestType
+    ): Omit<LoginResponseType, 'token'> {
+        return {
+            ...payload,
+            isLoggedIn: false,
         }
     }
 }
