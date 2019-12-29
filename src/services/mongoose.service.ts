@@ -8,7 +8,7 @@ export class DatabaseService {
         @Inject(CourseModel) private courses: MongooseModel<CourseModel>
     ) { }
 
-    async save(course: CourseModel): Promise<CourseModel> {
+    async save(course: Omit<CourseModel, '_id'>): Promise<CourseModel> {
         return await this.courses.insertMany(course)
     }
 
@@ -20,8 +20,8 @@ export class DatabaseService {
         return await this.courses.deleteOne({ id })
     }
 
-    async findAll(): Promise<CourseModel[]> {
-        return await this.courses.find({})
+    async find(start: number, count: number): Promise<CourseModel[]> {
+        return await this.courses.find({}).skip(start).limit(count)
     }
 
     async findOne(id: number): Promise<CourseModel> {

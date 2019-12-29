@@ -1,6 +1,7 @@
-import { Controller, Get, Post, Put, Delete, Inject, BodyParams, PathParams } from "@tsed/common";
-import { DatabaseService } from '../services/mongoose.service';
-import { CourseModel } from '../models/course.model';
+import { Controller, Get, Post, Put, Delete, Inject, BodyParams, PathParams, QueryParams } from '@tsed/common'
+import { generate } from 'shortid'
+import { DatabaseService } from '../services/mongoose.service'
+import { CourseModel } from '../models/course.model'
 
 @Controller("/courses")
 export class Course {
@@ -16,15 +17,21 @@ export class Course {
     }
 
     @Get()
-    findList(): Promise<CourseModel[]> {
-        return this.dbservice.findAll();
+    findList(
+        @QueryParams('start') start: string,
+        @QueryParams('count') count: string
+    ): Promise<CourseModel[]> {
+        return this.dbservice.find(Number(start), Number(count));
     }
 
     @Post()
     create(
-        @BodyParams() payload: CourseModel
-    ): Promise<CourseModel> {
-        return this.dbservice.save(payload)
+        @BodyParams() payload: Omit<CourseModel, '_id' | 'id'>
+    ) {
+        return this.dbservice.save({
+            ...payload,
+            id: generate()
+        })
     }
 
     @Put()
