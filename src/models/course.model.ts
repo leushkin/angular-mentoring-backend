@@ -1,9 +1,7 @@
 import { Model, ObjectID, Unique, Indexed } from "@tsed/mongoose"
 import { Required, Pattern } from "@tsed/common"
 
-@Model({
-    name: 'courses'
-})
+@Model({ name: 'courses' })
 export class CourseModel {
     @ObjectID()
     _id: string
@@ -11,7 +9,7 @@ export class CourseModel {
     @Indexed()
     @Unique()
     @Required()
-    id: number
+    id: string // TODO id should be number
 
     @Pattern(/[a-z]/)
     title: string

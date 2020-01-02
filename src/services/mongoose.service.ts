@@ -9,14 +9,14 @@ export class DatabaseService {
     ) { }
 
     async save(course: Omit<CourseModel, '_id'>): Promise<CourseModel> {
-        return await this.courses.insertMany(course)
+        return await this.courses.insertMany(course) // TODO there should be insert method.
     }
 
     async update(course: CourseModel) {
         return await this.courses.updateOne({id: course.id}, course);
     }
 
-    async delete(id: number): Promise<any> {
+    async delete(id: string): Promise<any> {
         return await this.courses.deleteOne({ id })
     }
 
@@ -24,7 +24,7 @@ export class DatabaseService {
         return await this.courses.find({}).skip(start).limit(count)
     }
 
-    async findOne(id: number): Promise<CourseModel> {
+    async findOne(id: string): Promise<CourseModel> {
         return await this.courses.findOne({ id })
     }
 }

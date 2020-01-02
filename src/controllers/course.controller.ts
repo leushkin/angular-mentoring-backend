@@ -3,6 +3,12 @@ import { generate } from 'shortid'
 import { DatabaseService } from '../services/mongoose.service'
 import { CourseModel } from '../models/course.model'
 
+/*
+ * TODO
+ *    - remove _id from response
+ *    - get rid of shortid
+*/
+
 @Controller("/courses")
 export class Course {
     constructor(
@@ -11,7 +17,7 @@ export class Course {
 
     @Get('/:id')
     findOne(
-        @PathParams('id') id: number
+        @PathParams('id') id: string
     ): Promise<CourseModel> {
         return this.dbservice.findOne(id)
     }
@@ -43,7 +49,7 @@ export class Course {
 
     @Delete('/:id')
     delete(
-        @PathParams('id') id: number
+        @PathParams('id') id: string
     ): Promise<CourseModel> {
         return this.dbservice.delete(id)
     }
